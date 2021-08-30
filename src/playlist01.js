@@ -4,7 +4,7 @@ function vidListinit() {
   const vidList = [
     "https://d2ufudlfb4rsg4.cloudfront.net/cnettv/hcgBWevF/adaptive/hcgBWevF_master.m3u8",
 
-    "http://d2ufudlfb4rsg4.cloudfront.net/fox9minneapolis/RDWN15EC/adaptive/RDWN15EC_master.m3u8",
+    "https://d2ufudlfb4rsg4.cloudfront.net/fox9minneapolis/RDWN15EC/adaptive/RDWN15EC_master.m3u8",
 
     "https://d2ufudlfb4rsg4.cloudfront.net/i24news/btiiAgOKj/adaptive/btiiAgOKj_master.m3u8",
 
@@ -15,7 +15,7 @@ function vidListinit() {
 }
 
 fillList("#video-picker");
-function fillList(_id, vidList = vidListinit()) {
+function fillList(_id, vidList = vidListinit(), playerId = "playerId") {
   const picker = document.querySelector(_id);
 
   picker.innerHTML = `<ol>
@@ -30,12 +30,26 @@ function fillList(_id, vidList = vidListinit()) {
 
   picker.onclick = (evt) => {
     evt.preventDefault();
-    console.log("t0:::::::", evt.target);
 
-    console.log(
-      "t::",
-      evt.target.parentElement?.href ? evt.target.parentElement.href : null
-    );
-    //.parentElement.href
+    performance.mark(`user-select-video`);
+    const videoSrc = evt.target.parentElement?.href
+      ? evt.target.parentElement.href
+      : null;
+    if (window["videojs"] && videoSrc) {
+      // const player00 = document.querySelector("video");
+      const player = videojs(playerId);
+      player.src(videoSrc);
+      player.play();
+    } else if (window["hls"]) {
+      const hls = window["hls"];
+      hls.loadSource(videoSrc);
+      const player = document.getElementById(playerId);
+      player.play();
+    }
+
+    // console.log(
+    //   "t::",
+    //   evt.target.parentElement?.href ? evt.target.parentElement.href : null
+    // );
   };
 }

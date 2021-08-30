@@ -8,7 +8,7 @@
   </head>
   <body>
     <h1>
-      Static 000
+      Static hls 0002
     </h1>
     <br />
     <section id="video-picker"></section>
@@ -16,7 +16,7 @@
     <section>
       <video
         id="playerId"
-        class="video-js"
+        class=" "
         controls
         width="640"
         height="268"
@@ -25,64 +25,39 @@
       >
         <!-- <source src="https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8" type="application/x-mpegURL"> -->
         <!-- <source src="https://ottverse.com/free-hls-m3u8-test-urls/#:~:text=https%3A//cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8" /> -->
-        <source
+        <!-- <source
           src="https://d2ufudlfb4rsg4.cloudfront.net/cnettv/hcgBWevF/adaptive/hcgBWevF_master.m3u8"
-        />
+        /> -->
       </video>
     </section>
   </body>
+
+  <script src="https://unpkg.com/hls.js@1.0.10/dist/hls.min.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script> -->
+
+  <!-- <video id="video"></video> -->
   <script>
-    window.HELP_IMPROVE_VIDEOJS = false;
-  </script>
-
-  <link
-    href="https://unpkg.com/video.js@7.15.2/dist/video-js.min.css"
-    rel="stylesheet"
-  />
-  <script src="https://unpkg.com/video.js@7.15.2/dist/video.min.js"></script>
-
-  <script>
-    // via the constructor
-    var player00 = videojs("playerId", {
-      html5: {
-        vhs: {
-          overrideNative: true
-        },
-        nativeAudioTracks: false,
-        nativeVideoTracks: false
-      }
-    });
-
-    // player.src({
-    //   src:
-    //     "https://d2zihajmogu5jn.cloudfront.net/bipbop-advanced/bipbop_16x9_variant.m3u8",
-    //   type: "application/x-mpegURL"
-    //   // withCredentials: true
-    // });
+    var video = document.getElementById("playerId");
+    // var videoSrc = "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8";
+    const videoSrc =
+      "https://d2ufudlfb4rsg4.cloudfront.net/cnettv/hcgBWevF/adaptive/hcgBWevF_master.m3u8";
+    var hls = new Hls();
+    hls.loadSource(videoSrc);
+    hls.attachMedia(video);
+    video.play();
   </script>
 
   <script src="src/playlist01.js"></script>
   <script>
-    // var player00 = videojs('my-player');
-
-    player00.ready(function () {
-      const playPromise = this.play();
-    });
-
-    player00.on("ended", function () {
-      const time = performance.now();
-      console.log({ videoevent: "ended", time });
-      // this.dispose();
-    });
-
-    window.__playerTimings = [];
+    // window.__playerTimings = [];
 
     [
       "waiting",
 
       "suspend",
 
-      "ready",
+      // "ready",
+      "ended",
 
       "pause",
       "play",
@@ -90,7 +65,7 @@
 
       "error",
 
-      // "progress",
+      "progress",
 
       "seeking",
       "seeked",
@@ -104,19 +79,14 @@
       "ratechange",
       "stalled"
     ].map((evtName) => {
-      player00.on(evtName, function (event) {
+      video.addEventListener(evtName, function (event) {
         const time = performance.now();
         performance.mark(`video-event-${evtName}`);
-
-        const eventInfo = { videoevent: evtName, time, event };
-        window.__playerTimings.push(eventInfo);
-        console.log(eventInfo);
-        // this.dispose();
       });
     });
 
-    const navPerf = performance.getEntriesByType("navigation");
+    // const navPerf = performance.getEntriesByType("navigation");
 
-    const resrcPerf = performance.getEntries("resource");
+    // const resrcPerf = performance.getEntries("resource");
   </script>
 </html>

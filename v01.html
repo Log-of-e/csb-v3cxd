@@ -8,7 +8,7 @@
   </head>
   <body>
     <h1>
-      Static 000
+      Static 02
     </h1>
     <br />
     <section id="video-picker"></section>
@@ -20,6 +20,7 @@
         controls
         width="640"
         height="268"
+        autoplay
         muted
         preload
       >
@@ -65,10 +66,6 @@
   <script>
     // var player00 = videojs('my-player');
 
-    player00.ready(function () {
-      const playPromise = this.play();
-    });
-
     player00.on("ended", function () {
       const time = performance.now();
       console.log({ videoevent: "ended", time });
@@ -82,16 +79,11 @@
 
       "suspend",
 
-      "ready",
-
       "pause",
       "play",
       "playing",
 
-      "error",
-
-      // "progress",
-
+      "progress",
       "seeking",
       "seeked",
       "canplay",
@@ -107,7 +99,6 @@
       player00.on(evtName, function (event) {
         const time = performance.now();
         performance.mark(`video-event-${evtName}`);
-
         const eventInfo = { videoevent: evtName, time, event };
         window.__playerTimings.push(eventInfo);
         console.log(eventInfo);
