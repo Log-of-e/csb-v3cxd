@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Static Template</title>
+    <title>Static Page with hls.js library</title>
   </head>
   <body>
     <h1>
-      Static hls 0003
+      Static Page with hls.js library
     </h1>
     <br />
     <section id="video-picker"></section>
@@ -49,8 +49,6 @@
 
   <script src="src/playlist01.js"></script>
   <script>
-    // window.__playerTimings = [];
-
     [
       "waiting",
 
@@ -84,9 +82,5 @@
         performance.mark(`video-event-${evtName}`);
       });
     });
-
-    // const navPerf = performance.getEntriesByType("navigation");
-
-    // const resrcPerf = performance.getEntries("resource");
   </script>
 </html>

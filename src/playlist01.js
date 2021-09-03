@@ -1,5 +1,3 @@
-var playlist = playlist || {};
-
 function vidListinit() {
   const vidList = [
     "https://d2ufudlfb4rsg4.cloudfront.net/cnettv/hcgBWevF/adaptive/hcgBWevF_master.m3u8",
